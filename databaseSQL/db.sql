@@ -41,13 +41,14 @@ CREATE TABLE Personagem_Pericia(
 CREATE TABLE Item(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
-    tipo tinyint, # 0:Ferramenta, 1: Arma
-    id_personagem INT REFERENCES Personagem(id) ON UPDATE CASCADE ON DELETE CASCADE
+    tipo TINYINT, # 0:Ferramenta, 1: Arma
+    id_personagem INT,
+    FOREIGN KEY (id_personagem) REFERENCES Personagem(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Arma(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    dano tinyint NOT NULL,
+    dano INT NOT NULL,
     id_item INT NOT NULL,
     FOREIGN KEY (id_item) REFERENCES Item(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
