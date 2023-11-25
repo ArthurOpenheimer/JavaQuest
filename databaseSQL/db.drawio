@@ -46,17 +46,14 @@
                 <mxCell id="17" value="Proeficiente" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="60" y="240" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="Arma" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
+                <mxCell id="19" value="Item" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="400" y="320" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="Não Mágica" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
+                <mxCell id="20" value="Arma" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="480" y="440" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="Mágica" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
+                <mxCell id="21" value="Ferramenta" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="340" y="440" width="100" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="22" value="Dano" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="550" y="360" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="Nome" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
                     <mxGeometry x="560" y="300" width="100" height="40" as="geometry"/>
@@ -160,12 +157,6 @@
                         <mxPoint x="570" y="280" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="45" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="19" target="22" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="410" y="280" as="sourcePoint"/>
-                        <mxPoint x="570" y="280" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="47" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="19" target="24" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="410" y="280" as="sourcePoint"/>
@@ -237,6 +228,15 @@
                 </mxCell>
                 <mxCell id="66" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
                     <mxGeometry x="460" y="90" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Dano" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="510" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="67" target="20">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="400" y="520" as="sourcePoint"/>
+                        <mxPoint x="400" y="490" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
