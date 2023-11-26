@@ -49,4 +49,28 @@ public class ItemDAO extends GenericDAO<Item> {
             preparedStatement.setInt(4, obj.getId());
         }
     }
+
+    public ArrayList<Item> getItensByPersonagem(int idPersonagem) {
+        connectToDB();
+
+        ArrayList<Item> itens = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT * FROM " + tableName + " WHERE id_personagem = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idPersonagem);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                itens.add(createEntity(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return itens;
+    }
 }

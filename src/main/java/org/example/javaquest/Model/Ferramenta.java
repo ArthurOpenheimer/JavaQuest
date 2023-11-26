@@ -5,7 +5,7 @@ public class Ferramenta extends Item {
     private int idItem;
 
     public Ferramenta(int idItem, String nome, String descricao, int idPersonagem) {
-        super(idItem, nome, 1, idPersonagem);
+        super(idItem, nome, 2, idPersonagem);
         this.descricao = descricao;
         this.idItem = idItem;
     }

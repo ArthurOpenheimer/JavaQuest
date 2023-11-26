@@ -12,6 +12,11 @@ public class PersonagemPericiaDAO extends GenericDAO<PersonagemPericia> {
     private String tableName = "Personagem_Pericia";
 
     @Override
+    public String getIDColumnName() {
+        return "id_pericia";
+    }
+
+    @Override
     protected String getTableName() {
         return tableName;
     }
@@ -39,5 +44,33 @@ public class PersonagemPericiaDAO extends GenericDAO<PersonagemPericia> {
             throws SQLException {
         preparedStatement.setInt(1, obj.getIdPersonagem());
         preparedStatement.setInt(2, obj.getIdPericia());
+    }
+
+    public ArrayList<PersonagemPericia> getPersonagemPericiaByPersonagem(int idPersonagem) {
+        connectToDB();
+
+        ArrayList<PersonagemPericia> personagemPericias = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT * FROM " + tableName + " WHERE id_personagem = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idPersonagem);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                personagemPericias.add(createEntity(rs));
+            }
+
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return personagemPericias;
     }
 }

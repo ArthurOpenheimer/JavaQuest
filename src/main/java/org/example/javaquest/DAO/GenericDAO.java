@@ -153,4 +153,28 @@ public abstract class GenericDAO<T> extends ConnectionDAO {
 
     }
 
+    public int getLastInsertedId() {
+        connectToDB();
+
+        String sql = "SELECT LAST_INSERT_ID() AS id";
+        int id = 0;
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+
+            return id;
+        } catch (SQLException e) {
+            System.out.println("Erro ao ler tabela: " + e.getMessage());
+            return 0;
+        } finally {
+            closeConnection();
+        }
+
+    }
+
 }
