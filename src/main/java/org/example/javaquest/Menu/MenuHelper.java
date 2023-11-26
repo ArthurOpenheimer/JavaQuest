@@ -45,6 +45,7 @@ public class MenuHelper {
                 case 0:
                     System.out.println("Saindo do programa. Até logo!");
                     flag = false;
+                    break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
