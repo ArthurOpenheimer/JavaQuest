@@ -9,17 +9,16 @@ import java.sql.SQLException;
 
 public class ConnectionDAO {
 
+    public Connection connection;
+    public PreparedStatement preparedStatement;
+    public Statement statement;
+    public ResultSet resultSet;
 
-    Connection connection;
-    PreparedStatement preparedStatement;
-    Statement statement;
-    ResultSet resultSet;
-
-    String databaseName = "javaquest";
-    String user = "root";
-    String password = "root";
-    String url = "jdbc:mysql://localhost:3306/" + databaseName + "?useTimezone=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
-
+    private String databaseName = "javaquest";
+    private String user = "root";
+    private String password = "root";
+    private String url = "jdbc:mysql://localhost:3306/" + databaseName
+            + "?useTimezone=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
 
     public void connectToDB() {
         try {
@@ -27,6 +26,17 @@ public class ConnectionDAO {
             System.out.println("Connected to the database");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            if (preparedStatement != null)
+                preparedStatement.close();
+            if (connection != null)
+                connection.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao fechar conexão: " + e.getMessage());
         }
     }
 }
