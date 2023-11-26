@@ -25,7 +25,6 @@ public class PersonagemController extends GenericController<Personagem> {
 
     @Override
     public Personagem getTerminalInput() {
-        System.out.println("===== Criar Personagem =====");
         Scanner scanner = ScannerSingleton.getInstance();
 
         System.out.print("Digite o nome do personagem: ");
@@ -132,6 +131,14 @@ public class PersonagemController extends GenericController<Personagem> {
         ItemDAO itemDAO = new ItemDAO();
         ArmaDAO armaDAO = new ArmaDAO();
         FerramentaDAO ferramentaDAO = new FerramentaDAO();
+        RacaDAO racaDao = new RacaDAO();
+        ClasseDAO classeDao = new ClasseDAO();
+
+        Raca raca = racaDao.readById(obj.getIdRaca());
+        newPersonagem.setRaca(raca);
+
+        Classe classe = classeDao.readById(obj.getIdClasse());
+        newPersonagem.setClasse(classe);
 
         ArrayList<Item> itens = itemDAO.getItensByPersonagem(obj.getId());
 
@@ -175,9 +182,10 @@ public class PersonagemController extends GenericController<Personagem> {
         }
     }
 
-    public void deleteById() {
+    private Personagem getExistentPersonagemId() {
         int id = getTerminalNumberInput("Digite o ID do personagem: ");
         PersonagemDAO personagemDAO = new PersonagemDAO();
+        Personagem p;
 
         while (true) {
             Personagem personagem = personagemDAO.readById(id);
@@ -186,11 +194,25 @@ public class PersonagemController extends GenericController<Personagem> {
                 System.out.println("Personagem não encontrado. Tente novamente.");
                 id = getTerminalNumberInput("Digite o ID do personagem: ");
             } else {
+                p = personagem;
                 break;
             }
         }
 
+        return p;
+    }
+
+    public void deleteById() {
+        Personagem p = getExistentPersonagemId();
+        int id = p.getId();
+
+        PersonagemDAO personagemDAO = new PersonagemDAO();
+        RacaDAO racaDao = new RacaDAO();
+        ClasseDAO classeDao = new ClasseDAO();
+
         boolean success = personagemDAO.delete(id);
+        success = racaDao.delete(p.getIdRaca());
+        success = classeDao.delete(p.getIdClasse());
 
         if (success) {
             System.out.println("Personagem deletado com sucesso!");
@@ -198,5 +220,133 @@ public class PersonagemController extends GenericController<Personagem> {
             System.out.println("Erro ao deletar personagem. Tente novamente.");
         }
 
+    }
+
+    public void update() {
+        Personagem personagem = getExistentPersonagemId();
+
+        Scanner scanner = ScannerSingleton.getInstance();
+
+        PersonagemDAO personagemDAO = new PersonagemDAO();
+        ItemDAO itemDAO = new ItemDAO();
+        ArmaDAO armaDAO = new ArmaDAO();
+        FerramentaDAO ferramentaDAO = new FerramentaDAO();
+        PericiaDAO periciaDAO = new PericiaDAO();
+        PersonagemPericiaDAO personagemPericiaDAO = new PersonagemPericiaDAO();
+        RacaDAO racaDao = new RacaDAO();
+        ClasseDAO classeDao = new ClasseDAO();
+
+        boolean updatePersonagemInfo = false;
+        boolean updatePericias = false;
+        boolean updateItens = false;
+        boolean updateRaca = false;
+        boolean updateClasse = false;
+
+        if (askForMore("Deseja atualizar o nome?")) {
+            System.out.print("Digite o nome do personagem: ");
+            String nome = scanner.nextLine();
+            personagem.setNome(nome);
+            updatePersonagemInfo = true;
+        }
+
+        if (askForMore("Deseja atualizar a CA?")) {
+            int ca = getTerminalNumberInput("Digite a CA do personagem: ");
+            personagem.setCa(ca);
+            updatePersonagemInfo = true;
+        }
+
+        if (askForMore("Deseja atualizar a raça?")) {
+            RacaController racaController = new RacaController();
+            Raca raca = racaController.getTerminalInput();
+            raca.setId(personagem.getIdRaca());
+            personagem.setRaca(raca);
+            updateRaca = true;
+        }
+
+        if (askForMore("Deseja atualizar a classe?")) {
+            ClasseController classeController = new ClasseController();
+            Classe classe = classeController.getTerminalInput();
+            classe.setId(personagem.getIdClasse());
+            personagem.setClasse(classe);
+            updateClasse = true;
+        }
+
+        if (askForMore("Deseja recriar as perícias?")) {
+            PericiaController periciaController = new PericiaController();
+            ArrayList<Pericia> pericias = periciaController.getTerminalInputList();
+            personagem.setPericias(pericias);
+            updatePericias = true;
+        }
+
+        if (askForMore("Deseja recriar os itens?")) {
+            ItemController itemController = new ItemController();
+            ArrayList<Item> itens = itemController.getTerminalInputList();
+            personagem.setItens(itens);
+            updateItens = true;
+        }
+
+        boolean success = false;
+
+        if (updatePersonagemInfo) {
+            success = personagemDAO.update(personagem);
+        }
+
+        if (updateRaca) {
+            success = racaDao.update(personagem.getRaca());
+        }
+
+        if (updateClasse) {
+            success = classeDao.update(personagem.getClasse());
+        }
+
+        if (updatePericias) {
+            personagemPericiaDAO.deleteByPersonagem(personagem.getId());
+
+            ArrayList<Pericia> pericias = personagem.getPericias();
+
+            for (Pericia pericia : pericias) {
+                success = periciaDAO.insert(pericia);
+                if (!success) {
+                    break;
+                }
+
+                int newPericiaId = periciaDAO.getLastInsertedId();
+
+                PersonagemPericia personagemPericia = new PersonagemPericia(personagem.getId(),
+                        newPericiaId);
+                success = personagemPericiaDAO.insert(personagemPericia);
+
+                if (!success) {
+                    break;
+                }
+            }
+        }
+
+        if (updateItens) {
+            itemDAO.deleteByPersonagem(personagem.getId());
+
+            ArrayList<Item> itens = personagem.getItens();
+
+            for (Item item : itens) {
+                item.setIdPersonagem(personagem.getId());
+
+                if (item instanceof Arma) {
+                    success = armaDAO.insert((Arma) item);
+                } else if (item instanceof Ferramenta) {
+                    success = ferramentaDAO.insert((Ferramenta) item);
+                }
+
+                if (!success) {
+                    break;
+                }
+            }
+        }
+
+        if (success) {
+            System.out.println("Personagem atualizado com sucesso!");
+        } else {
+            System.out.println("Erro ao atualizar personagem. Tente novamente.");
+
+        }
     }
 }

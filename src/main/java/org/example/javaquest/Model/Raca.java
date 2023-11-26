@@ -28,6 +28,10 @@ public class Raca {
         return tracoRacial;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void showInfo() {
         System.out.println("===== Raça =====");
         System.out.println("Nome: " + this.nome);

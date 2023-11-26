@@ -28,6 +28,10 @@ public class Classe {
         return habilidade;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void showInfo() {
         System.out.println("===== Classe =====");
         System.out.println("Nome: " + this.nome);

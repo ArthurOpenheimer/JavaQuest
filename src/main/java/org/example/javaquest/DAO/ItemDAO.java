@@ -75,4 +75,29 @@ public class ItemDAO extends GenericDAO<Item> {
 
         return itens;
     }
+
+    public boolean deleteByPersonagem(int idPersonagem) {
+        connectToDB();
+
+        try {
+
+            String query = "DELETE FROM " + tableName + " WHERE id_personagem = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idPersonagem);
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return false;
+    }
 }

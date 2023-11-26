@@ -52,6 +52,7 @@ public class MenuHelper {
     }
 
     private void criarPersonagem() {
+        System.out.println("===== Criar Personagem =====");
         PersonagemController personagemController = new PersonagemController();
         Personagem personagem = personagemController.getTerminalInput();
         PersonagemController.create(personagem);
@@ -69,7 +70,8 @@ public class MenuHelper {
     }
 
     private void atualizarPersonagem() {
-        // Implement the logic for updating a character here
-        System.out.println("Atualizando Personagem...");
+        System.out.println("===== Atualizar Personagem =====");
+        PersonagemController personagemController = new PersonagemController();
+        personagemController.update();
     }
 }

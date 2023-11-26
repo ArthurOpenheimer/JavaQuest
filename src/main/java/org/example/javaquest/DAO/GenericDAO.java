@@ -38,8 +38,6 @@ public abstract class GenericDAO<T> extends ConnectionDAO {
 
         fields.remove("id");
 
-        fields.add("id");
-
         String fieldNames = String.join(" = ?, ", fields) + " = ?";
 
         String tableName = getTableName();

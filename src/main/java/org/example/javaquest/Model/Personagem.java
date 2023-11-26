@@ -132,4 +132,12 @@ public class Personagem {
         this.idClasse = idClasse;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCa(int ca) {
+        this.ca = ca;
+    }
+
 }
