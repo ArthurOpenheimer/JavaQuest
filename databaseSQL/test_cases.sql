@@ -84,3 +84,20 @@ SELECT i.nome, a.dano, f.descricao FROM Item i
 LEFT JOIN Arma a ON a.id_item = i.id
 LEFT JOIN Ferramenta f ON f.id_item = i.id;
 
+-- TEST CASCADES
+-- Apagar um personagem apaga suas perícias da tabela Personagem_Pericia
+SELECT * FROM Personagem_Pericia;
+DELETE FROM Personagem WHERE id = 1;
+SELECT * FROM Personagem_Pericia;
+
+-- Apagar uma perícia apaga suas referências na tabela Personagem_Pericia
+SELECT * FROM Personagem_Pericia;
+DELETE FROM Pericia WHERE id = 1;
+SELECT * FROM Personagem_Pericia;
+
+-- Apagar um item apaga suas referências nas tabelas Arma e Ferramenta
+SELECT * FROM Arma;
+SELECT * FROM Ferramenta;
+DELETE FROM Item WHERE id = 2;
+SELECT * FROM Arma;
+SELECT * FROM Ferramenta;
