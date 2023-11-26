@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class GenericDAO<T> extends ConnectionDAO {
@@ -107,7 +106,7 @@ public abstract class GenericDAO<T> extends ConnectionDAO {
     public T readById(int id) {
         connectToDB();
 
-        String sql = "SELECT * FROM " + getTableName() + " WHERE id = ?";
+        String sql = "SELECT * FROM " + getTableName() + " WHERE " + getIDColumnName() + " = ?";
         T obj = null;
 
         try {
@@ -129,11 +128,11 @@ public abstract class GenericDAO<T> extends ConnectionDAO {
 
     }
 
-    public List<T> readAll() {
+    public ArrayList<T> readAll() {
         connectToDB();
 
         String sql = "SELECT * FROM " + getTableName();
-        List<T> list = new ArrayList<>();
+        ArrayList<T> list = new ArrayList<>();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -156,7 +155,7 @@ public abstract class GenericDAO<T> extends ConnectionDAO {
     public int getLastInsertedId() {
         connectToDB();
 
-        String sql = "SELECT LAST_INSERT_ID() AS id";
+        String sql = "SELECT MAX(" + getIDColumnName() + ") as id FROM " + getTableName();
         int id = 0;
 
         try {

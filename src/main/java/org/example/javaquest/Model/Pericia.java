@@ -27,4 +27,10 @@ public class Pericia {
     public int getBonus() {
         return bonus;
     }
+
+    public void showInfo() {
+        System.out.println("===== Pericia =====");
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Bonus: " + this.bonus);
+    }
 }

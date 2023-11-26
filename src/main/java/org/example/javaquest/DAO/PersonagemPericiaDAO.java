@@ -69,6 +69,8 @@ public class PersonagemPericiaDAO extends GenericDAO<PersonagemPericia> {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
 
         return personagemPericias;

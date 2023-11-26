@@ -27,4 +27,10 @@ public class Classe {
     public String getHabilidade() {
         return habilidade;
     }
+
+    public void showInfo() {
+        System.out.println("===== Classe =====");
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Habilidade: " + this.habilidade);
+    }
 }

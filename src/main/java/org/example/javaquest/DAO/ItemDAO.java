@@ -69,6 +69,8 @@ public class ItemDAO extends GenericDAO<Item> {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
 
         return itens;

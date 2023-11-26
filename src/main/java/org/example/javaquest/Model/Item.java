@@ -6,10 +6,9 @@ public class Item {
     private int tipo;
     private int idPersonagem;
 
-    public Item(String nome, int tipo, int idPersonagem) {
+    public Item(String nome, int tipo) {
         this.nome = nome;
         this.tipo = tipo;
-        this.idPersonagem = idPersonagem;
     }
 
     public Item(int id, String nome, int tipo, int idPersonagem) {
@@ -49,6 +48,14 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void showInfo() {
+        System.out.println("===== Item =====");
+        System.out.println("Nome: " + this.nome);
+
+        String tipo = this.tipo == Arma.tipo ? "Arma" : "Ferramenta";
+        System.out.println("Tipo: " + tipo);
     }
 
 }

@@ -23,7 +23,6 @@ public class ConnectionDAO {
     public void connectToDB() {
         try {
             connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the database");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

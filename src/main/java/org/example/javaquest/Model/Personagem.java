@@ -9,6 +9,9 @@ public class Personagem {
     private int idRaca;
     private int idClasse;
 
+    private Raca raca;
+    private Classe classe;
+
     private ArrayList<Pericia> pericias = new ArrayList<>();
     private ArrayList<Item> itens = new ArrayList<>();
 
@@ -25,6 +28,40 @@ public class Personagem {
         this.ca = ca;
         this.idRaca = idRaca;
         this.idClasse = idClasse;
+    }
+
+    public Personagem(String nome, int ca) {
+        this.nome = nome;
+        this.ca = ca;
+    }
+
+    public void showInfo() {
+        System.out.println("===== Personagem =====");
+        System.out.println("ID: " + this.id);
+        System.out.println("Nome: " + this.nome);
+        System.out.println("CA: " + this.ca);
+
+        if (this.raca != null) {
+            this.raca.showInfo();
+        }
+
+        if (this.classe != null) {
+            this.classe.showInfo();
+        }
+
+        if (this.pericias.size() > 0) {
+            System.out.println("===== Pericias =====");
+            for (Pericia pericia : this.pericias) {
+                pericia.showInfo();
+            }
+        }
+
+        if (this.itens.size() > 0) {
+            System.out.println("===== Itens =====");
+            for (Item item : this.itens) {
+                item.showInfo();
+            }
+        }
     }
 
     public int getId() {
@@ -70,4 +107,29 @@ public class Personagem {
     public ArrayList<Item> getItens() {
         return itens;
     }
+
+    public Raca getRaca() {
+        return raca;
+    }
+
+    public Classe getClasse() {
+        return classe;
+    }
+
+    public void setRaca(Raca raca) {
+        this.raca = raca;
+    }
+
+    public void setClasse(Classe classe) {
+        this.classe = classe;
+    }
+
+    public void setIdRaca(int idRaca) {
+        this.idRaca = idRaca;
+    }
+
+    public void setIdClasse(int idClasse) {
+        this.idClasse = idClasse;
+    }
+
 }

@@ -27,4 +27,10 @@ public class Raca {
     public String getTracoRacial() {
         return tracoRacial;
     }
+
+    public void showInfo() {
+        System.out.println("===== Raça =====");
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Traço Racial: " + this.tracoRacial);
+    }
 }

@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.example.javaquest.Model.Arma;
 import org.example.javaquest.Model.Item;
@@ -63,10 +62,13 @@ public class ArmaDAO extends GenericDAO<Arma> {
 
     @Override
     public boolean insert(Arma obj) {
-        boolean success = super.insert(obj);
-
         ItemDAO itemDAO = new ItemDAO();
-        itemDAO.insert(obj);
+        boolean success = itemDAO.insert(obj);
+        int idItem = itemDAO.getLastInsertedId();
+
+        obj.setIdItem(idItem);
+
+        success = super.insert(obj);
 
         return success;
     }
@@ -103,11 +105,11 @@ public class ArmaDAO extends GenericDAO<Arma> {
     }
 
     @Override
-    public List<Arma> readAll() {
-        List<Arma> armas = super.readAll();
+    public ArrayList<Arma> readAll() {
+        ArrayList<Arma> armas = super.readAll();
 
         ItemDAO itemDAO = new ItemDAO();
-        List<Item> itens = itemDAO.readAll();
+        ArrayList<Item> itens = itemDAO.readAll();
 
         for (int i = 0; i < armas.size(); i++) {
             Item item = null;
