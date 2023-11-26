@@ -21,8 +21,8 @@ CREATE TABLE Personagem(
     ca INT NOT NULL,
     id_raca INT NOT NULL,
     id_classe INT UNIQUE NOT NULL,
-    FOREIGN KEY (id_raca) REFERENCES Raca(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (id_classe) REFERENCES Classe(id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (id_raca) REFERENCES Raca(id),
+    FOREIGN KEY (id_classe) REFERENCES Classe(id)
 );
 
 CREATE TABLE Pericia(
