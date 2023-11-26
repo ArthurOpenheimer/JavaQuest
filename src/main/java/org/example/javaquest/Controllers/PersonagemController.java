@@ -349,4 +349,73 @@ public class PersonagemController extends GenericController<Personagem> {
 
         }
     }
+
+    public void atacar() {
+        System.out.println("Personagem que ataca:");
+        Personagem personagemAttack = getExistentPersonagemId();
+
+        System.out.println("Personagem que recebe o ataque:");
+        Personagem personagemDefense = getExistentPersonagemId();
+
+        personagemAttack = preload(personagemAttack);
+
+        ArrayList<String> armasOptions = new ArrayList<String>();
+        for (Item item : personagemAttack.getItens()) {
+            if (item instanceof Arma) {
+                armasOptions.add(item.getNome());
+            }
+        }
+
+        System.out.println("Armas disponíveis:");
+        String armaString = getTerminalOptionInput(armasOptions);
+
+        int dano = 0;
+
+        for (Item item : personagemAttack.getItens()) {
+            if (item instanceof Arma && item.getNome().equals(armaString)) {
+                Arma arma = (Arma) item;
+                dano += arma.getDano();
+                break;
+            }
+        }
+
+        int bonus = 0;
+        for (Pericia pericia : personagemAttack.getPericias()) {
+            bonus += (int) (pericia.getBonus() * 0.1);
+        }
+
+        dano += bonus;
+
+        int caFinal = personagemDefense.getCa() - dano;
+
+        PersonagemDAO personagemDAO = new PersonagemDAO();
+
+        System.out.println("Personagem " + personagemAttack.getNome() + " atacou com " + armaString + " e causou "
+                + dano + " de dano! (Bonus de " + bonus + " devido às perícias)");
+
+        if (caFinal <= 0) {
+            System.out.println("Personagem " + personagemDefense.getNome() + " morreu!");
+
+            RacaDAO racaDao = new RacaDAO();
+            ClasseDAO classeDao = new ClasseDAO();
+
+            boolean success = personagemDAO.delete(personagemDefense.getId());
+            success = racaDao.delete(personagemDefense.getIdRaca());
+            success = classeDao.delete(personagemDefense.getIdClasse());
+
+            if (success) {
+                System.out.println("Personagem deletado com sucesso!");
+            } else {
+                System.out.println("Erro ao deletar personagem. Tente novamente.");
+            }
+
+        } else {
+            System.out.println("Personagem " + personagemDefense.getNome() + " sobreviveu com "
+                    + caFinal + " de CA!");
+
+            personagemDefense.setCa(caFinal);
+            personagemDAO.update(personagemDefense);
+        }
+
+    }
 }

@@ -18,6 +18,7 @@ public class MenuHelper {
             System.out.println("2) Deletar Personagem");
             System.out.println("3) Ver Todos Personagens");
             System.out.println("4) Atualizar Personagem");
+            System.out.println("5) Atacar Personagem");
             System.out.println("0) Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -37,6 +38,9 @@ public class MenuHelper {
                     break;
                 case 4:
                     atualizarPersonagem();
+                    break;
+                case 5:
+                    atacarPersonagem();
                     break;
                 case 0:
                     System.out.println("Saindo do programa. Até logo!");
@@ -73,5 +77,11 @@ public class MenuHelper {
         System.out.println("===== Atualizar Personagem =====");
         PersonagemController personagemController = new PersonagemController();
         personagemController.update();
+    }
+
+    private void atacarPersonagem() {
+        System.out.println("===== Atacar Personagem =====");
+        PersonagemController personagemController = new PersonagemController();
+        personagemController.atacar();
     }
 }
