@@ -207,12 +207,8 @@ public class PersonagemController extends GenericController<Personagem> {
         int id = p.getId();
 
         PersonagemDAO personagemDAO = new PersonagemDAO();
-        RacaDAO racaDao = new RacaDAO();
-        ClasseDAO classeDao = new ClasseDAO();
 
         boolean success = personagemDAO.delete(id);
-        success = racaDao.delete(p.getIdRaca());
-        success = classeDao.delete(p.getIdClasse());
 
         if (success) {
             System.out.println("Personagem deletado com sucesso!");
@@ -396,12 +392,7 @@ public class PersonagemController extends GenericController<Personagem> {
         if (caFinal <= 0) {
             System.out.println("Personagem " + personagemDefense.getNome() + " morreu!");
 
-            RacaDAO racaDao = new RacaDAO();
-            ClasseDAO classeDao = new ClasseDAO();
-
             boolean success = personagemDAO.delete(personagemDefense.getId());
-            success = racaDao.delete(personagemDefense.getIdRaca());
-            success = classeDao.delete(personagemDefense.getIdClasse());
 
             if (success) {
                 System.out.println("Personagem deletado com sucesso!");
